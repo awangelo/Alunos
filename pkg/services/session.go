@@ -56,7 +56,7 @@ func ValidateLogin(username, password string) bool {
 			// User nao encontrado.
 			return false
 		}
-		log.Printf("Erro ao consultar usuário: %v", err)
+		log.Printf("Erro ao consultar usuario: %v", err)
 		return false
 	}
 
