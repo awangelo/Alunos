@@ -5,7 +5,7 @@ DATABASE_PATH=./database.db
 
 # Alvo para rodar o servidor
 run:
-    @echo "Iniciando variaveis de ambiente..."
-    CERT_FILE=$(CERT_FILE) KEY_FILE=$(KEY_FILE) go run cmd/http/main.go
+	@echo "Iniciando variaveis de ambiente..."
+	CERT_FILE=$(CERT_FILE) KEY_FILE=$(KEY_FILE) go run cmd/alunos/main.go
 
 .PHONY: run
