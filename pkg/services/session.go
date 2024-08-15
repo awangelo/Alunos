@@ -24,7 +24,7 @@ func GenerateSessionToken() string {
 }
 
 // SaveSessionToken salva o token de sessao no banco de dados.
-func SaveSessionToken(token string) bool {
+func SaveSessionToken(username string, token string) bool {
 	dbPath := os.Getenv("DATABASE_PATH")
 	// Abre o banco de dados
 	db, err := sql.Open("sqlite3", dbPath)
@@ -35,7 +35,7 @@ func SaveSessionToken(token string) bool {
 	defer db.Close()
 
 	// Insere o token de sessao no banco de dados.
-	_, err = db.Exec("INSERT INTO sessions (token) VALUES (?)", token)
+	_, err = db.Exec("INSERT INTO sessions (username, token) VALUES (?, ?)", username, token)
 	return err == nil
 }
 
