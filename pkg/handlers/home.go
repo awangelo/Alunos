@@ -11,7 +11,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		"Title": "Inicio",
 	}
 
-	tmpl, err := template.ParseFiles("templates/layout.html", "templates/home.html")
+	tmpl, err := template.ParseFiles("web/templates/layout.html", "web/templates/home.html")
 	if err != nil {
 		log.Println("Error parsing template:", err)
 		return

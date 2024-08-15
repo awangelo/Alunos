@@ -11,7 +11,7 @@ func Alunos(w http.ResponseWriter, r *http.Request) {
 		"Title": "Alunos",
 	}
 
-	tmpl, err := template.ParseFiles("templates/layout.html", "templates/alunos.html")
+	tmpl, err := template.ParseFiles("web/templates/layout.html", "web/templates/alunos.html")
 	if err != nil {
 		log.Println("Error parsing template:", err)
 		return

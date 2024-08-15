@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-var loginTemplate = template.Must(template.ParseFiles("layout.html", "login.html"))
+var loginTemplate = template.Must(template.ParseFiles("web/templates/layout.html", "web/templates/login.html"))
 
 func Login(w http.ResponseWriter, r *http.Request) {
 	// Parse dos templates.
