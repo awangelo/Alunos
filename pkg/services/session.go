@@ -50,7 +50,7 @@ func ValidateLogin(username, password string) bool {
 
 	// Query para obter o hash da senha do usuário.
 	var hashedPassword string
-	err = db.QueryRow("SELECT password FROM users WHERE username = ?", username).Scan(&hashedPassword)
+	err = db.QueryRow("SELECT password_hash FROM users WHERE username = ?", username).Scan(&hashedPassword)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			// User nao encontrado.
