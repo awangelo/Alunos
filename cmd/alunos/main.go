@@ -9,7 +9,12 @@ import (
 func main() {
 	// Novo mux para rotear as requisicoes, com os handlers definidos para cada metodo e rota.
 	mux := http.NewServeMux()
-	mux.HandleFunc("GET /", handlers.Home)
+
+	// Servir arquivos estaticos.
+	fs := http.FileServer(http.Dir("./web/static"))
+	mux.Handle("/static/", http.StripPrefix("/static/", fs))
+
+	mux.HandleFunc("/", handlers.Home)
 	mux.HandleFunc("GET /login", handlers.Login)
 	mux.HandleFunc("POST /login", handlers.LoginAuth)
 
