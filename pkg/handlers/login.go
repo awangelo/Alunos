@@ -56,6 +56,11 @@ func LoginAuth(w http.ResponseWriter, r *http.Request) {
 		HttpOnly: true,      // Impede que o cookie seja acessado por js.
 	})
 
-	// Redireciona para a pagina de alunos.
-	http.Redirect(w, r, "/alunos", http.StatusFound)
+	// Retorna uma resposta JSON com status OK indicando sucesso.
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]string{
+		"message":  "Login bem-sucedido.",
+		"redirect": "/alunos",
+	})
 }
