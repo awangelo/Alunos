@@ -10,12 +10,8 @@ import (
 var loginTemplate = template.Must(template.ParseFiles("web/templates/layout.html", "web/templates/login.html"))
 
 func Login(w http.ResponseWriter, r *http.Request) {
-	// Parse dos templates.
 	// Executa o template sem erro.
-	loginTemplate.Execute(w, map[string]interface{}{
-		"Title": "Login",
-		"Error": nil,
-	})
+	loginTemplate.Execute(w, nil)
 }
 
 // LoginAuth vai devolver json com erro se o login for invalido.
