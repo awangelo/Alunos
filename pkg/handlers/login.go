@@ -31,6 +31,14 @@ func LoginAuth(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Verifica se o usuário já possui um token de sessão válido.
+	oldSessionToken, err := r.Cookie("session_token")
+	if err == nil && services.IsValidSession(oldSessionToken.Value) {
+		// Retorna uma resposta JSON com status OK indicando sucesso.
+		userIsAuthenticated(w)
+		return
+	}
+
 	// Token `string`.
 	sessionToken := services.GenerateSessionToken()
 
@@ -48,11 +56,15 @@ func LoginAuth(w http.ResponseWriter, r *http.Request) {
 	http.SetCookie(w, &http.Cookie{
 		Name:     "session_token",
 		Value:    sessionToken,
-		Path:     "/alunos", // Sera usado apenas nas rotas de alunos.
-		HttpOnly: true,      // Impede que o cookie seja acessado por js.
+		Path:     "/",  // Sera usado apenas nas rotas de alunos.
+		HttpOnly: true, // Impede que o cookie seja acessado por js.
 	})
 
-	// Retorna uma resposta JSON com status OK indicando sucesso.
+	userIsAuthenticated(w)
+}
+
+// Retorna uma resposta JSON com status OK indicando sucesso.
+func userIsAuthenticated(w http.ResponseWriter) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]string{
