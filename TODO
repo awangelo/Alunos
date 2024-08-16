@@ -1,1 +1,3 @@
 Adcionar ultimo login na db.
+Transformar POST em json.
+Fazer errors em session.go.
