@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"alunos/pkg/services"
+	"encoding/json"
 	"html/template"
 	"net/http"
 )
@@ -17,6 +18,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+// LoginAuth vai devolver json com erro se o login for invalido.
 func LoginAuth(w http.ResponseWriter, r *http.Request) {
 	// Pega os valores do formulario.
 	username := r.FormValue("username")
@@ -24,9 +26,11 @@ func LoginAuth(w http.ResponseWriter, r *http.Request) {
 
 	// Se o login for invalido, renderiza envia uma mensagem de erro.
 	if !services.ValidateLogin(username, password) {
-		loginTemplate.Execute(w, map[string]interface{}{
-			"Title": "Login",
-			"Error": "Usuário ou senha incorretos.",
+		// Escreve o header e o status code no writer.
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusUnauthorized)
+		json.NewEncoder(w).Encode(map[string]string{
+			"error": "Usuário ou senha incorretos.",
 		})
 		return
 	}
@@ -35,7 +39,12 @@ func LoginAuth(w http.ResponseWriter, r *http.Request) {
 	sessionToken := services.GenerateSessionToken()
 
 	if !services.SaveSessionToken(username, sessionToken) {
-		http.Error(w, "Erro ao criar sessao.", http.StatusInternalServerError)
+		// Escreve o header e o status code no writer.
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(map[string]string{
+			"error": "Erro ao salvar o token de sessão.",
+		})
 		return
 	}
 
