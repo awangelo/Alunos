@@ -1,18 +1,28 @@
 {{ define "content" }}
 <h3>Alunos cadastrados</h3>
-<table border="1">
+
+<table border="1" style="margin-top: 15px;">
     <tr>
-        <th>Nome</th>
+        <th>Email</th>
         <th>RA</th>
+        <th>M1</th>
+        <th>M2</th>
+        <th>M3</th>
         <th>Editar</th>
         <th>Excluir</th>
     </tr>
     <tr>
-        <td>Nome</td>
-        <td>RA</td>
-        <td><a href="/notas/{{ .ID }}">Notas</a></td>
-        <td><a href="/editar/{{ .ID }}">Editar</a></td>
-        <td><a href="/excluir/{{ .ID }}">Excluir</a></td>
+        {{ range .Alunos }}
+        <td>{{ .Email }}</td>
+        <td>{{ .RA }}</td>
+        <td>{{ .M1 }}</td>
+        <td>{{ .M2 }}</td>
+        <td>{{ .M3 }}</td>
+        <td><a href="/notas/{{ .RA }}">Notas</a></td>
+        <td><a href="/editar/{{ .RA }}">Editar</a></td>
+        <td><a href="/excluir/{{ .RA }}">Excluir</a></td>
+        {{ end }}
     </tr>
 </table>
+<p style="margin-top: 30px;"><a href="/inserir/">Inserir</a> novo aluno</p>
 {{ end }}
