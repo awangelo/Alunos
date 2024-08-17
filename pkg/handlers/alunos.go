@@ -7,16 +7,8 @@ import (
 )
 
 func Alunos(w http.ResponseWriter, r *http.Request) {
-	data := map[string]interface{}{
-		"Title": "Alunos",
-	}
-
-	tmpl, err := template.ParseFiles("web/templates/layout.html", "web/templates/alunos.html")
-	if err != nil {
-		log.Println("Error parsing template:", err)
-		return
-	}
-	err = tmpl.Execute(w, data)
+	tmpl := template.Must(template.ParseFiles("web/templates/layout.html", "web/templates/alunos.html"))
+	err := tmpl.Execute(w, nil)
 	if err != nil {
 		log.Println("Error executing template:", err)
 	}

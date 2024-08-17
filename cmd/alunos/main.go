@@ -12,7 +12,7 @@ func main() {
 
 	// Servir arquivos estaticos.
 	fs := http.FileServer(http.Dir("./web/static"))
-	mux.Handle("/static/", http.StripPrefix("/static/", fs))
+	mux.Handle("/web/static/", http.StripPrefix("/web/static/", fs))
 
 	mux.HandleFunc("/", handlers.Home)
 	mux.HandleFunc("GET /login", handlers.Login)

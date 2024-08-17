@@ -4,14 +4,16 @@ import (
 	"alunos/pkg/services"
 	"encoding/json"
 	"html/template"
+	"log"
 	"net/http"
 )
 
-var loginTemplate = template.Must(template.ParseFiles("web/templates/layout.html", "web/templates/login.html"))
-
 func Login(w http.ResponseWriter, r *http.Request) {
-	// Executa o template sem erro.
-	loginTemplate.Execute(w, nil)
+	tmpl := template.Must(template.ParseFiles("web/templates/layout.html", "web/templates/login.html"))
+	err := tmpl.Execute(w, nil)
+	if err != nil {
+		log.Println("Error executing template:", err)
+	}
 }
 
 // LoginAuth vai devolver json com erro se o login for invalido.
