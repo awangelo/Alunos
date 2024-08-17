@@ -11,7 +11,7 @@
 }
 
 a {
-    color: #7c9dff;
+    color: #7262ff;
     font-weight: 450;
 }
 
@@ -32,7 +32,7 @@ header {
 header nav {
     display: flex;
     justify-content: center;
-    font-size: 1.4em;
+    font-size: 1.2em;
     padding: 10px 0;
 }
 

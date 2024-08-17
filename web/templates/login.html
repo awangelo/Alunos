@@ -5,8 +5,6 @@
 {{ define "content" }}
 <h1>Login</h1>
 
-<div id="errorMessage" style="color: red;"></div>
-
 <form id="loginForm" action="/login">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" required>
@@ -16,4 +14,6 @@
     <br>
     <button type="submit">Login</button>
 </form>
+<br>
+<div id="errorMessage" style="color: #ff7060;"></div>
 {{ end }}
