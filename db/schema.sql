@@ -1,12 +1,21 @@
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL UNIQUE,
     password_hash TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS sessions (
+CREATE TABLE sessions (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL,
     token TEXT NOT NULL UNIQUE,
+    username TEXT NOT NULL,
     FOREIGN KEY(username) REFERENCES users(username)
+);
+
+CREATE TABLE alunos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ra INTEGER NOT NULL UNIQUE,
+    email TEXT NOT NULL UNIQUE,
+    nota1 REAL,
+    nota2 REAL,
+    nota3 REAL
 );
