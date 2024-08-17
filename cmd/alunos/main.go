@@ -17,6 +17,7 @@ func main() {
 	mux.HandleFunc("/", handlers.Home)
 	mux.HandleFunc("GET /login", handlers.Login)
 	mux.HandleFunc("POST /login", handlers.LoginAuth)
+	mux.HandleFunc("GET /error", handlers.Error)
 
 	// Middleware de autenticacao para as rotas protegidas.
 	mux.Handle("GET /alunos", handlers.AuthMiddleware(http.HandlerFunc(handlers.Alunos)))

@@ -16,7 +16,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 		// Se nao estiver presente ou nao for valido, redireciona para a pagina de aviso.
 		if err != nil || !services.IsValidSession(cookie.Value) {
 			// Redireciona para a home se nao estiver autenticado.
-			http.Redirect(w, r, "/", http.StatusFound)
+			http.Redirect(w, r, "/error", http.StatusFound)
 			return
 		}
 		// Chama o proximo handler se estiver autenticado.
