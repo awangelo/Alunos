@@ -1,3 +1,7 @@
+{{ define "scripts" }}
+<script src="/web/static/remover.js"></script>
+{{ end }}
+
 {{ define "content" }}
 <h3>Alunos cadastrados</h3>
 
@@ -8,8 +12,6 @@
         <th>M1</th>
         <th>M2</th>
         <th>M3</th>
-        <th>Editar</th>
-        <th>Excluir</th>
     </tr>
     {{ range . }}
     <tr>
@@ -19,7 +21,7 @@
         <td>{{ .M2 }}</td>
         <td>{{ .M3 }}</td>
         <td><a href="/editar/{{ .RA }}">Editar</a></td>
-        <td><a href="/excluir/{{ .RA }}">Excluir</a></td>
+        <td><a href="#" onclick="removerAluno('{{ .RA }}')">Remover</a></td>
     </tr>
     {{ end }}
 </table>
