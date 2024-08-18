@@ -11,18 +11,17 @@
         <th>Editar</th>
         <th>Excluir</th>
     </tr>
+    {{ range .Alunos }}
     <tr>
-        {{ range .Alunos }}
         <td>{{ .Email }}</td>
         <td>{{ .RA }}</td>
         <td>{{ .M1 }}</td>
         <td>{{ .M2 }}</td>
         <td>{{ .M3 }}</td>
-        <td><a href="/notas/{{ .RA }}">Notas</a></td>
         <td><a href="/editar/{{ .RA }}">Editar</a></td>
         <td><a href="/excluir/{{ .RA }}">Excluir</a></td>
-        {{ end }}
     </tr>
+    {{ end }}
 </table>
 <p style="margin-top: 30px;"><a href="/inserir/">Inserir</a> novo aluno</p>
 {{ end }}
