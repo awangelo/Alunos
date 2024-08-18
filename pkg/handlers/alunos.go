@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 )
 
 type Aluno struct {
@@ -24,6 +25,30 @@ func Alunos(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println("Error executing template:", err)
 	}
+}
+
+func RemoverAluno(w http.ResponseWriter, r *http.Request) {
+	// Como o metodo vai DELETE, nao utilizara parametros na URL
+	// entao `ra := r.URL.Query().Get("ra")` nao funcionara.
+	parts := strings.Split(r.URL.Path, "/")
+	ra := parts[len(parts)-1]
+
+	dbPath := os.Getenv("DATABASE_PATH")
+	// Abre o banco de dados
+	db, err := sql.Open("sqlite3", dbPath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	// Query para remover o aluno.
+	_, err = db.Exec("DELETE FROM alunos WHERE ra = ?", ra)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Recarrega a pagina de alunos.
+	http.Redirect(w, r, "/alunos", http.StatusSeeOther)
 }
 
 // getAlunos retorna uma lista de alunos do banco de dados.

@@ -19,10 +19,9 @@ func main() {
 	mux.HandleFunc("POST /login", handlers.LoginAuth)
 	mux.HandleFunc("GET /error", handlers.Error)
 
-	// Middleware de autenticacao para as rotas protegidas.
 	mux.Handle("GET /alunos", handlers.AuthMiddleware(http.HandlerFunc(handlers.Alunos)))
 	// mux.Handle("/alunos/inserir", handlers.AuthMiddleware(http.HandlerFunc(handlers.InserirAluno)))
-	// mux.Handle("/alunos/remover", handlers.AuthMiddleware(http.HandlerFunc(handlers.RemoverAluno)))
+	mux.Handle("DELETE /alunos/{ra}", handlers.AuthMiddleware(http.HandlerFunc(handlers.RemoverAluno)))
 
 	log.Printf("Listening on :80")
 	if err := http.ListenAndServe(":80", mux); err != nil {
