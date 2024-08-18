@@ -41,7 +41,7 @@ func getAlunos() []Aluno {
 	if err != nil {
 		log.Fatal(err)
 	}
-	//
+
 	defer rows.Close()
 
 	var alunos []Aluno
