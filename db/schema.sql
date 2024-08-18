@@ -6,8 +6,8 @@ CREATE TABLE users (
 
 CREATE TABLE sessions (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    token TEXT NOT NULL UNIQUE,
     username TEXT NOT NULL,
+    token TEXT NOT NULL UNIQUE,
     FOREIGN KEY(username) REFERENCES users(username)
 );
 
