@@ -1,6 +1,5 @@
 {{ define "content" }}
 <h1>Bem vindo ao sistema de alunos!</h1>
-<h2>Total de alunos cadastrados: {{ .Total }}</h2>
-<h3><a href="/login">Login</a></h3>
-<h3><a href="/alunos">Editar alunos</a></h3>
+<h2 style="font-size: 1.6em; margin-bottom: 15px;">Alunos cadastrados: {{ . }}</h2>
+<h3 style="font-size: 1.2em;"><a href="/alunos">Editar alunos</a></h3>
 {{ end }}
