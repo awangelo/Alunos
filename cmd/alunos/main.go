@@ -20,7 +20,8 @@ func main() {
 	mux.HandleFunc("GET /error", handlers.Error)
 
 	mux.Handle("GET /alunos", handlers.AuthMiddleware(http.HandlerFunc(handlers.Alunos)))
-	// mux.Handle("/alunos/inserir", handlers.AuthMiddleware(http.HandlerFunc(handlers.InserirAluno)))
+	mux.Handle("GET /alunos/inserir", handlers.AuthMiddleware(http.HandlerFunc(handlers.InserirAlunoForm)))
+	mux.Handle("POST /alunos/inserir", handlers.AuthMiddleware(http.HandlerFunc(handlers.InserirAluno)))
 	mux.Handle("DELETE /alunos/{ra}", handlers.AuthMiddleware(http.HandlerFunc(handlers.RemoverAluno)))
 
 	log.Printf("Listening on :80")
