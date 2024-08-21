@@ -1,39 +1,19 @@
 package handlers
 
 import (
-	"database/sql"
+	"alunos/internal/models"
 	"html/template"
 	"log"
 	"net/http"
-	"os"
 )
 
 func Home(w http.ResponseWriter, r *http.Request) {
-	numAlunos := getNumAlunos()
+	numAlunos := models.GetNumAlunos()
 
 	tmpl := template.Must(template.ParseFiles("web/templates/layout.html", "web/templates/home.html"))
-	err := tmpl.Execute(w, numAlunos)
-	if err != nil {
+	if err := tmpl.Execute(w, numAlunos); err != nil {
 		log.Println("Error executing template:", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
 	}
-}
-
-func getNumAlunos() int {
-	dbPath := os.Getenv("DATABASE_PATH")
-	// Abre o banco de dados
-	db, err := sql.Open("sqlite3", dbPath)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
-
-	// Query para obter o numero de alunos.
-	var numAlunos int
-	// Ira retornar apenas uma linha com o numero de alunos.
-	err = db.QueryRow("SELECT COUNT(*) FROM alunos").Scan(&numAlunos)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return numAlunos
 }

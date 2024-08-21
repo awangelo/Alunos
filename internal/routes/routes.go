@@ -2,6 +2,7 @@ package routes
 
 import (
 	"alunos/internal/handlers"
+	"alunos/internal/services"
 	"net/http"
 )
 
@@ -16,10 +17,10 @@ func NewRouter() *http.ServeMux {
 	mux.HandleFunc("POST /login", handlers.LoginAuth)
 	mux.HandleFunc("GET /error", handlers.Error)
 
-	mux.Handle("GET /alunos", handlers.AuthMiddleware(http.HandlerFunc(handlers.Alunos)))
-	mux.Handle("GET /alunos/inserir", handlers.AuthMiddleware(http.HandlerFunc(handlers.InserirAlunoForm)))
-	mux.Handle("POST /alunos/inserir", handlers.AuthMiddleware(http.HandlerFunc(handlers.InserirAluno)))
-	mux.Handle("DELETE /alunos/{ra}", handlers.AuthMiddleware(http.HandlerFunc(handlers.RemoverAluno)))
+	mux.Handle("GET /alunos", services.AuthMiddleware(http.HandlerFunc(handlers.Alunos)))
+	mux.Handle("GET /alunos/inserir", services.AuthMiddleware(http.HandlerFunc(handlers.InserirAlunoForm)))
+	mux.Handle("POST /alunos/inserir", services.AuthMiddleware(http.HandlerFunc(handlers.InserirAluno)))
+	mux.Handle("DELETE /alunos/{ra}", services.AuthMiddleware(http.HandlerFunc(handlers.RemoverAluno)))
 
 	return mux
 }
