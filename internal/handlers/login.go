@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"alunos/internal/models"
 	"alunos/internal/services"
 	"encoding/json"
 	"html/template"
@@ -10,9 +11,10 @@ import (
 
 func Login(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("web/templates/layout.html", "web/templates/login.html"))
-	err := tmpl.Execute(w, nil)
-	if err != nil {
+	if err := tmpl.Execute(w, nil); err != nil {
 		log.Println("Error executing template:", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
 	}
 }
 
@@ -22,7 +24,7 @@ func LoginAuth(w http.ResponseWriter, r *http.Request) {
 	username := r.FormValue("username")
 	password := r.FormValue("password")
 
-	// Se o login for invalido, renderiza envia uma mensagem de erro.
+	// Se o login for invalido, renderiza envia uma mensagem de erro e retorna.
 	if !services.ValidateLogin(username, password) {
 		// Escreve o header e o status code no writer.
 		w.Header().Set("Content-Type", "application/json")
@@ -33,15 +35,10 @@ func LoginAuth(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Verifica se o usuário já possui um token de sessão válido.
-	oldSessionToken, err := r.Cookie("session_token")
-	if err == nil && services.IsValidSession(oldSessionToken.Value) {
-		// Retorna uma resposta JSON com status OK indicando sucesso.
-		userIsAuthenticated(w)
-		return
-	}
+	// Autentica o user caso ele tenha o cookie.
+	models.UserHasCookie(w, r)
 
-	// Token `string`.
+	// Gera um novo cookie.
 	sessionToken := services.GenerateSessionToken()
 
 	if !services.SaveSessionToken(username, sessionToken) {
