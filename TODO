@@ -2,3 +2,4 @@ Fazer errors em session.go.
 Insercao de alunos.
 Update de alunos.
 Verificacao de campos.
+Abstrair conn. com db.
