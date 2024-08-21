@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"alunos/pkg/services"
+	"alunos/internal/services"
 	"encoding/json"
 	"html/template"
 	"log"

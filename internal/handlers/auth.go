@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"alunos/pkg/services"
+	"alunos/internal/services"
 	"net/http"
 
 	_ "github.com/mattn/go-sqlite3"
