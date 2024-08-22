@@ -20,6 +20,8 @@ func NewRouter() *http.ServeMux {
 	mux.Handle("GET /alunos", services.AuthMiddleware(http.HandlerFunc(handlers.Alunos)))
 	mux.Handle("GET /alunos/inserir", services.AuthMiddleware(http.HandlerFunc(handlers.InserirAlunoForm)))
 	mux.Handle("POST /alunos/inserir", services.AuthMiddleware(http.HandlerFunc(handlers.InserirAluno)))
+	mux.Handle("GET /alunos/editar", services.AuthMiddleware(http.HandlerFunc(handlers.EditarAlunoForm)))
+	mux.Handle("POST /alunos/editar", services.AuthMiddleware(http.HandlerFunc(handlers.EditarAluno)))
 	mux.Handle("DELETE /alunos/{ra}", services.AuthMiddleware(http.HandlerFunc(handlers.RemoverAluno)))
 
 	return mux

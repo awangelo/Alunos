@@ -60,3 +60,36 @@ func RemoverAluno(w http.ResponseWriter, r *http.Request) {
 	// Recarrega a pagina de alunos.
 	http.Redirect(w, r, "/alunos", http.StatusSeeOther)
 }
+
+func EditarAlunoForm(w http.ResponseWriter, r *http.Request) {
+	ra := r.URL.Query().Get("ra")
+
+	aluno, err := models.GetAluno(ra)
+	if err != nil {
+		log.Println("Error fetching student:", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	tmpl := template.Must(template.ParseFiles("web/templates/layout.html", "web/templates/editar.html"))
+	err = tmpl.Execute(w, aluno)
+	if err != nil {
+		log.Println("Error executing template:", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+	}
+}
+
+func EditarAluno(w http.ResponseWriter, r *http.Request) {
+	ra := r.FormValue("ra")
+	email := r.FormValue("email")
+	m1, m2, m3 := r.FormValue("m1"), r.FormValue("m2"), r.FormValue("m3")
+
+	err := models.UpdateAluno(ra, email, m1, m2, m3)
+	if err != nil {
+		log.Println("Error updating student:", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	http.Redirect(w, r, "/alunos", http.StatusSeeOther)
+}

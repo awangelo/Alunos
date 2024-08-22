@@ -14,7 +14,7 @@ type Aluno struct {
 	M3    float64
 }
 
-// GetAlunos retorna uma lista de alunos do banco de dados.
+// GetAlunos retorna uma lista de todos os alunos registrados no banco de dados.
 func GetAlunos() []Aluno {
 	dbPath := os.Getenv("DATABASE_PATH")
 	// Abre o banco de dados
@@ -43,6 +43,24 @@ func GetAlunos() []Aluno {
 	}
 
 	return alunos
+}
+
+// GetAluno retorna um aluno do banco de dados utilizando o RA como chave.
+func GetAluno(ra string) (Aluno, error) {
+	dbPath := os.Getenv("DATABASE_PATH")
+	db, err := sql.Open("sqlite3", dbPath)
+	if err != nil {
+		return Aluno{}, err
+	}
+	defer db.Close()
+
+	var aluno Aluno
+	err = db.QueryRow("SELECT ra, email, nota1, nota2, nota3 FROM alunos WHERE ra = ?", ra).Scan(&aluno.RA, &aluno.Email, &aluno.M1, &aluno.M2, &aluno.M3)
+	if err != nil {
+		return Aluno{}, err
+	}
+
+	return aluno, nil
 }
 
 // GetNumAlunos retorna o numero de alunos registrados.
@@ -76,6 +94,19 @@ func InsertAluno(ra, email, m1, m2, m3 string) error {
 	defer db.Close()
 
 	_, err = db.Exec("INSERT INTO alunos (ra, email, nota1, nota2, nota3) VALUES (?, ?, ?, ?, ?)", ra, email, m1, m2, m3)
+	return err
+}
+
+// UpdateAluno atualiza os dados de um aluno no banco de dados.
+func UpdateAluno(ra, email, m1, m2, m3 string) error {
+	dbPath := os.Getenv("DATABASE_PATH")
+	db, err := sql.Open("sqlite3", dbPath)
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	_, err = db.Exec("UPDATE alunos SET email = ?, nota1 = ?, nota2 = ?, nota3 = ? WHERE ra = ?", email, m1, m2, m3, ra)
 	return err
 }
 

@@ -20,7 +20,7 @@
         <td>{{ .M1 }}</td>
         <td>{{ .M2 }}</td>
         <td>{{ .M3 }}</td>
-        <td><a href="/editar/{{ .RA }}">Editar</a></td>
+        <td><a href="/alunos/editar?ra={{ .RA }}">Editar</a></td>
         <td><a href="#" onclick="removerAluno('{{ .RA }}')">Remover</a></td>
     </tr>
     {{ end }}
