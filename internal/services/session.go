@@ -7,8 +7,19 @@ import (
 	"log"
 	"os"
 
+	_ "github.com/mattn/go-sqlite3" // Import the SQLite driver
 	"golang.org/x/crypto/bcrypt"
 )
+
+// openDatabase abre a conexão com o banco de dados.
+func openDatabase() (*sql.DB, error) {
+	dbPath := os.Getenv("DATABASE_PATH")
+	db, err := sql.Open("sqlite3", dbPath)
+	if err != nil {
+		return nil, err
+	}
+	return db, nil
+}
 
 // GenerateSessionToken gera um token de sessao aleatorio.
 func GenerateSessionToken() string {
@@ -25,9 +36,7 @@ func GenerateSessionToken() string {
 
 // SaveSessionToken salva o token de sessao no banco de dados.
 func SaveSessionToken(username string, token string) bool {
-	dbPath := os.Getenv("DATABASE_PATH")
-	// Abre o banco de dados
-	db, err := sql.Open("sqlite3", dbPath)
+	db, err := openDatabase()
 	if err != nil {
 		log.Printf("Erro ao abrir banco de dados: %v", err)
 		return false
@@ -40,8 +49,7 @@ func SaveSessionToken(username string, token string) bool {
 }
 
 func ValidateLogin(username, password string) bool {
-	dbPath := os.Getenv("DATABASE_PATH")
-	db, err := sql.Open("sqlite3", dbPath)
+	db, err := openDatabase()
 	if err != nil {
 		log.Printf("Erro ao abrir banco de dados: %v", err)
 		return false
@@ -66,9 +74,7 @@ func ValidateLogin(username, password string) bool {
 }
 
 func IsValidSession(token string) bool {
-	dbPath := os.Getenv("DATABASE_PATH")
-	// Abre o banco de dados
-	db, err := sql.Open("sqlite3", dbPath)
+	db, err := openDatabase()
 	if err != nil {
 		log.Fatal(err)
 	}
