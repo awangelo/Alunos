@@ -84,6 +84,11 @@ func EditarAluno(w http.ResponseWriter, r *http.Request) {
 	email := r.FormValue("email")
 	m1, m2, m3 := r.FormValue("m1"), r.FormValue("m2"), r.FormValue("m3")
 
+	if email == "" || ra == "" || m1 == "" || m2 == "" || m3 == "" {
+		http.Error(w, "Todos os campos são obrigatórios.", http.StatusBadRequest)
+		return
+	}
+
 	err := models.UpdateAluno(ra, email, m1, m2, m3)
 	if err != nil {
 		log.Println("Error updating student:", err)
