@@ -24,6 +24,16 @@ func LoginAuth(w http.ResponseWriter, r *http.Request) {
 	username := r.FormValue("username")
 	password := r.FormValue("password")
 
+	if username == "" || password == "" {
+		// Escreve o header e o status code no writer.
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(map[string]string{
+			"error": "Usuário e senha são obrigatórios.",
+		})
+		return
+	}
+
 	// Se o login for invalido, renderiza envia uma mensagem de erro e retorna.
 	if !services.ValidateLogin(username, password) {
 		// Escreve o header e o status code no writer.
