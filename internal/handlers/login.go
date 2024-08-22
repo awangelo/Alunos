@@ -39,7 +39,16 @@ func LoginAuth(w http.ResponseWriter, r *http.Request) {
 	models.UserHasCookie(w, r)
 
 	// Gera um novo cookie.
-	sessionToken := services.GenerateSessionToken()
+	sessionToken, err := services.GenerateSessionToken()
+	if err != nil {
+		// Escreve o header e o status code no writer.
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(map[string]string{
+			"error": "Erro ao gerar o token de sessão.",
+		})
+		return
+	}
 
 	if !services.SaveSessionToken(username, sessionToken) {
 		// Escreve o header e o status code no writer.

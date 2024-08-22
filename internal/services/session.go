@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"database/sql"
 	"encoding/hex"
+	"fmt"
 	"log"
 	"os"
 
@@ -22,16 +23,16 @@ func openDatabase() (*sql.DB, error) {
 }
 
 // GenerateSessionToken gera um token de sessao aleatorio.
-func GenerateSessionToken() string {
+func GenerateSessionToken() (string, error) {
 	// Slice of bytes para armazenar o token.
 	b := make([]byte, 32)
 	_, err := rand.Read(b)
 	if err != nil {
 		log.Println("Erro ao gerar token:", err)
-		return ""
+		return "", fmt.Errorf("Erro ao gerar token: %v", err)
 	}
 	// Converte para string hex.
-	return hex.EncodeToString(b)
+	return hex.EncodeToString(b), nil
 }
 
 // SaveSessionToken salva o token de sessao no banco de dados.
