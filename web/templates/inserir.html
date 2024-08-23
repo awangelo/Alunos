@@ -1,22 +1,33 @@
 {{ define "content" }}
 <h1>Inserir aluno</h1>
 
-<form id="inserirForm" action="/alunos/inserir" method="post">
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
+<form id="inserirForm" action="/alunos/inserir" method="post" style="margin: 10px;">
+    <input type="email" id="email" name="email" required placeholder="email">
     <br>
-    <label for="ra">RA:</label>
-    <input type="number" id="ra" name="ra" min="0" required>
+    <input type="number" id="ra" name="ra" min="0" required placeholder="ra" class="no-spinners">
     <br>
-    <label for="m1">M1:</label>
-    <input type="number" id="m1" name="m1" min="0" max="10" step="0.1" required>
+    <input type="number" id="m1" name="m1" min="0" max="10" step="0.1" required placeholder="nota 1" class="no-spinners"
+        style="padding: 2px 7px;">
     <br>
-    <label for="m2">M2:</label>
-    <input type="number" id="m2" name="m2" min="0" max="10" step="0.1" required>
+    <input type="number" id="m2" name="m2" min="0" max="10" step="0.1" required placeholder="nota 2" class="no-spinners"
+        style="padding: 2px 7px;">
     <br>
-    <label for="m3">M3:</label>
-    <input type="number" id="m3" name="m3" min="0" max="10" step="0.1" required>
+    <input type="number" id="m3" name="m3" min="0" max="10" step="0.1" required placeholder="nota 3" class="no-spinners"
+        style="padding: 2px 7px;">
     <br>
-    <button type="submit">Inserir</button>
+    <button type="submit" style="margin-top: 12px;">Inserir</button>
 </form>
+
+<style>
+    /* Esconde os spinners nos campos de entrada do tipo number */
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
 {{ end }}

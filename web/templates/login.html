@@ -5,15 +5,12 @@
 {{ define "content" }}
 <h1>Login</h1>
 
-<form id="loginForm" action="/login">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
+<form id="loginForm" action="/login" style="margin: 10px;">
+    <input type="text" id="username" name="username" placeholder="username" required>
     <br>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
+    <input type="password" id="password" name="password" placeholder="password" required style=" margin-bottom: 12px;">
     <br>
     <button type="submit">Login</button>
 </form>
-<br>
-<div id="errorMessage" style="color: #ff7060;"></div>
+<div id="errorMessage" style="color: #ff7060; margin-top: 12px;"></div>
 {{ end }}
