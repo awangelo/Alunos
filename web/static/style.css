@@ -49,6 +49,35 @@ main {
     text-align: center;
 }
 
+input {
+    padding: 2px;
+    text-align: center;
+    margin: 3px;
+    border-color: #7262ff;
+}
+
+button {
+    color: #7262ff;
+    padding: 3px 10px 3px 10px;
+    border-color: #7262ff;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table,
+th,
+td {
+    border: 1px solid #7262ff;
+    box-shadow: 1px 1px 2px rgba(25, 17, 40, 0.1);
+}
+
+td,
+th {
+    padding: 5px;
+}
+
 footer {
     position: fixed;
     bottom: 0;
